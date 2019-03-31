@@ -3,7 +3,7 @@
 #include<stddef.h>
 #include"mtsched.h"
 #include"rwlock.h"
-#include"avl.h"
+#include"avlbst.h"
 
 //=============================================================================
 // mtsched_manager feature: The main purpose of this feature is to manage every

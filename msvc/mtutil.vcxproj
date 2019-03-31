@@ -176,6 +176,7 @@
   <ItemGroup>
     <ClInclude Include="..\argext.h" />
     <ClInclude Include="..\logprintf.h" />
+    <ClInclude Include="..\msc_inttypes.h" />
     <ClInclude Include="..\mtatomic.h" />
     <ClInclude Include="..\mtcommon.h" />
     <ClInclude Include="..\mtsched.h" />
@@ -183,7 +184,7 @@
     <ClInclude Include="..\mutex.h" />
     <ClInclude Include="..\rwlock.h" />
     <ClInclude Include="..\randinst.h" />
-    <ClInclude Include="..\avl.h" />
+    <ClInclude Include="..\avlbst.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\logprintf.c" />
@@ -194,7 +195,7 @@
     <ClCompile Include="..\mutex.c" />
     <ClCompile Include="..\rwlock.c" />
     <ClCompile Include="..\randinst.c" />
-    <ClCompile Include="..\avl.c" />
+    <ClCompile Include="..\avlbst.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

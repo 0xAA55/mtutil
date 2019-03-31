@@ -84,7 +84,7 @@ int mtsched_get_sys_logic_threads()
 
 mtsched_p mtsched_create(int logic_threads, size_t num_jobs_per_thread, size_t stack_size, void *userdata)
 {
-	size_t i;
+	int i;
 	int holdrand;
 	mtsched_p s = calloc(1, sizeof *s);
 	if(!s) goto GenErrExit;
