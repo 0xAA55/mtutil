@@ -23,44 +23,42 @@
 #if defined(_WIN32) && STDATOMIC_SELF_IMPLEMENTATION == 1
 #  include<Windows.h>
 
-typedef intptr_t atomic_baseunit_t;
-typedef volatile atomic_baseunit_t atomic_unit_t;
-typedef atomic_unit_t atomic_flag;
-typedef atomic_unit_t atomic_bool;
-typedef atomic_unit_t atomic_char;
-typedef atomic_unit_t atomic_schar;
-typedef atomic_unit_t atomic_uchar;
-typedef atomic_unit_t atomic_short;
-typedef atomic_unit_t atomic_ushort;
-typedef atomic_unit_t atomic_int;
-typedef atomic_unit_t atomic_uint;
-typedef atomic_unit_t atomic_long;
-typedef atomic_unit_t atomic_ulong;
-typedef atomic_unit_t atomic_llong;
-typedef atomic_unit_t atomic_ullong;
-typedef atomic_unit_t atomic_wchar_t;
-typedef atomic_unit_t atomic_int_least8_t;
-typedef atomic_unit_t atomic_uint_least8_t;
-typedef atomic_unit_t atomic_int_least16_t;
-typedef atomic_unit_t atomic_uint_least16_t;
-typedef atomic_unit_t atomic_int_least32_t;
-typedef atomic_unit_t atomic_uint_least32_t;
-typedef atomic_unit_t atomic_int_least64_t;
-typedef atomic_unit_t atomic_uint_least64_t;
-typedef atomic_unit_t atomic_int_fast8_t;
-typedef atomic_unit_t atomic_uint_fast8_t;
-typedef atomic_unit_t atomic_int_fast16_t;
-typedef atomic_unit_t atomic_uint_fast16_t;
-typedef atomic_unit_t atomic_int_fast32_t;
-typedef atomic_unit_t atomic_uint_fast32_t;
-typedef atomic_unit_t atomic_int_fast64_t;
-typedef atomic_unit_t atomic_uint_fast64_t;
-typedef atomic_unit_t atomic_intptr_t;
-typedef atomic_unit_t atomic_uintptr_t;
-typedef atomic_unit_t atomic_size_t;
-typedef atomic_unit_t atomic_ptrdiff_t;
-typedef atomic_unit_t atomic_intmax_t;
-typedef atomic_unit_t atomic_uintmax_t;
+typedef volatile int			atomic_flag;
+typedef volatile int			atomic_bool;
+typedef volatile char			atomic_char;
+typedef volatile signed char 	atomic_schar;
+typedef volatile unsigned char 	atomic_uchar;
+typedef volatile short 			atomic_short;
+typedef volatile unsigned short	atomic_ushort;
+typedef volatile int 			atomic_int;
+typedef volatile unsigned int 	atomic_uint;
+typedef volatile long 			atomic_long;
+typedef volatile unsigned long 	atomic_ulong;
+typedef volatile long long 		atomic_llong;
+typedef volatile unsigned long long atomic_ullong;
+typedef volatile wchar_t 		atomic_wchar_t;
+typedef volatile int_least8_t	atomic_int_least8_t;
+typedef volatile uint_least8_t	atomic_uint_least8_t;
+typedef volatile int_least16_t	atomic_int_least16_t;
+typedef volatile uint_least16_t	atomic_uint_least16_t;
+typedef volatile int_least32_t	atomic_int_least32_t;
+typedef volatile uint_least32_t	atomic_uint_least32_t;
+typedef volatile int_least64_t	atomic_int_least64_t;
+typedef volatile uint_least64_t	atomic_uint_least64_t;
+typedef volatile int_fast8_t	atomic_int_fast8_t;
+typedef volatile uint_fast8_t	atomic_uint_fast8_t;
+typedef volatile int_fast16_t	atomic_int_fast16_t;
+typedef volatile uint_fast16_t	atomic_uint_fast16_t;
+typedef volatile int_fast32_t	atomic_int_fast32_t;
+typedef volatile uint_fast32_t	atomic_uint_fast32_t;
+typedef volatile int_fast64_t	atomic_int_fast64_t;
+typedef volatile uint_fast64_t	atomic_uint_fast64_t;
+typedef volatile intptr_t		atomic_intptr_t;
+typedef volatile uintptr_t		atomic_uintptr_t;
+typedef volatile size_t			atomic_size_t;
+typedef volatile ptrdiff_t		atomic_ptrdiff_t;
+typedef volatile intmax_t		atomic_intmax_t;
+typedef volatile uintmax_t		atomic_uintmax_t;
 
 #define ATOMIC_FLAG_INIT 0
 
@@ -102,12 +100,12 @@ do {                                    \
 #define atomic_exchange_explicit(object, desired, order) \
     atomic_exchange(object, desired)
 
-static __inline int atomic_compare_exchange_strong(atomic_unit_t *object, atomic_unit_t *expected,
-	atomic_unit_t desired)
+static __inline int atomic_compare_exchange_strong(volatile void *object, volatile void *expected,
+	intptr_t desired)
 {
-	atomic_unit_t old = *expected;
-	*expected = (atomic_baseunit_t)InterlockedCompareExchangePointer((volatile PVOID*)object, (PVOID)desired, (PVOID)old);
-	return *expected == old;
+	intptr_t old = *(intptr_t*)expected;
+	*(intptr_t*)expected = (intptr_t)InterlockedCompareExchangePointer((volatile PVOID*)object, (PVOID)desired, (PVOID)old);
+	return *(intptr_t*)expected == old;
 }
 
 #define atomic_compare_exchange_strong_explicit(object, expected, desired, success, failure) \
@@ -184,8 +182,42 @@ static __inline int atomic_compare_exchange_strong(atomic_unit_t *object, atomic
 
 #if defined(__GNUC__) && STDATOMIC_SELF_IMPLEMENTATION == 1
 
-
-
+typedef volatile int			atomic_flag;
+typedef volatile int			atomic_bool;
+typedef volatile char			atomic_char;
+typedef volatile signed char 	atomic_schar;
+typedef volatile unsigned char 	atomic_uchar;
+typedef volatile short 			atomic_short;
+typedef volatile unsigned short	atomic_ushort;
+typedef volatile int 			atomic_int;
+typedef volatile unsigned int 	atomic_uint;
+typedef volatile long 			atomic_long;
+typedef volatile unsigned long 	atomic_ulong;
+typedef volatile long long 		atomic_llong;
+typedef volatile unsigned long long atomic_ullong;
+typedef volatile wchar_t 		atomic_wchar_t;
+typedef volatile int_least8_t	atomic_int_least8_t;
+typedef volatile uint_least8_t	atomic_uint_least8_t;
+typedef volatile int_least16_t	atomic_int_least16_t;
+typedef volatile uint_least16_t	atomic_uint_least16_t;
+typedef volatile int_least32_t	atomic_int_least32_t;
+typedef volatile uint_least32_t	atomic_uint_least32_t;
+typedef volatile int_least64_t	atomic_int_least64_t;
+typedef volatile uint_least64_t	atomic_uint_least64_t;
+typedef volatile int_fast8_t	atomic_int_fast8_t;
+typedef volatile uint_fast8_t	atomic_uint_fast8_t;
+typedef volatile int_fast16_t	atomic_int_fast16_t;
+typedef volatile uint_fast16_t	atomic_uint_fast16_t;
+typedef volatile int_fast32_t	atomic_int_fast32_t;
+typedef volatile uint_fast32_t	atomic_uint_fast32_t;
+typedef volatile int_fast64_t	atomic_int_fast64_t;
+typedef volatile uint_fast64_t	atomic_uint_fast64_t;
+typedef volatile intptr_t		atomic_intptr_t;
+typedef volatile uintptr_t		atomic_uintptr_t;
+typedef volatile size_t			atomic_size_t;
+typedef volatile ptrdiff_t		atomic_ptrdiff_t;
+typedef volatile intmax_t		atomic_intmax_t;
+typedef volatile uintmax_t		atomic_uintmax_t;
 
 
 #  undef STDATOMIC_SELF_IMPLEMENTATION

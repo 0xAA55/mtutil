@@ -12,7 +12,7 @@
 #define LOG_TRUNCATE NDEBUG
 #endif
 
-static int g_log_new_session = 0;
+static atomic_int g_log_new_session = 0;
 static mutex_t g_log_lock = 0;
 static char g_log_last[4096];
 
@@ -44,11 +44,13 @@ static void log_leave_lock()
 
 static FILE *log_get_fp()
 {
+	FILE *fp = NULL;
 #if LOG_TRUNCATE
-	FILE *fp = fopen(LOG_FILE, "w");
-#else
-	FILE *fp = fopen(LOG_FILE, "a");
-#endif
+	if(atomic_load(&g_log_new_session)) fp = fopen(LOG_FILE, "a");
+	else fp = fopen(LOG_FILE, "w");
+#else // !LOG_TRUNCATE
+	fp = fopen(LOG_FILE, "a");
+#endif // !LOG_TRUNCATE
 	if(!fp) fp = stdout;
 	
 	return fp;
@@ -61,10 +63,10 @@ static void log_free_fp(FILE *fp)
 
 static void log_session_check(FILE *fp)
 {
-	if(!g_log_new_session)
+	if(!atomic_load(&g_log_new_session))
 	{
 		fprintf(fp, "\n\t======== NEW SESSION ========\n\n");
-		g_log_new_session = 1;
+		atomic_store(&g_log_new_session, 1);
 	}
 }
 

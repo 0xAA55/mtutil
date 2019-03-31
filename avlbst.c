@@ -109,7 +109,7 @@ static avlbst_p avlbst_insert_recursive(avlbst_p n, size_t key, void *userdata)
 
 	return avlbst_keep_balance_ins(n, key);
 GenErrExit:
-	logprintf_e("Insert data(%"PRIsize_t") to BST failed: %s\n", key, strerror(errno));
+	logprintf_e("[avlbst] Insert data(%"PRIsize_t") to BST failed: %s\n", key, strerror(errno));
 	goto FailExit;
 FailExit:
 	return NULL;
@@ -127,10 +127,10 @@ int avlbst_insert(avlbst_p *ppavlbst, size_t key, void *userdata)
 	*ppavlbst = n;
 	return 1;
 InvalidParamExit:
-	logprintf_e("Insert data(%"PRIsize_t") to BST failed: Invalid parameters\n", key);
+	logprintf_e("[avlbst] Insert data(%"PRIsize_t") to BST failed: Invalid parameters\n", key);
 	goto FailExit;
 GenErrExit:
-	logprintf_e("Insert data(%"PRIsize_t") to BST failed: %s\n", key, strerror(errno));
+	logprintf_e("[avlbst] Insert data(%"PRIsize_t") to BST failed: %s\n", key, strerror(errno));
 	goto FailExit;
 FailExit:
 	return 0;
@@ -266,7 +266,7 @@ int avlbst_remove(avlbst_p *ppavlbst, size_t key, void(*on_free)(void *userdata)
 	*ppavlbst = avlbst_remove_recursive(*ppavlbst, key, on_free);
 	return 1;
 InvalidParamExit:
-	logprintf_e("Remove data(%"PRIsize_t") from BST failed: Invalid parameters\n", key);
+	logprintf_e("[avlbst] Remove data(%"PRIsize_t") from BST failed: Invalid parameters\n", key);
 	goto FailExit;
 FailExit:
 	return 0;

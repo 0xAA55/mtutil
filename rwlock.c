@@ -1,6 +1,5 @@
 #include"rwlock.h"
 #include"mtcommon.h"
-// #include"projcfg.h"
 
 void rwlock_lock_r(rwlock_p l)
 {

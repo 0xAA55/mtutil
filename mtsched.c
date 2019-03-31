@@ -1,6 +1,6 @@
 #include"mtsched.h"
-#include"logprintf.h"
 #include"randinst.h"
+#include"logprintf.h"
 #include<time.h>
 
 #ifndef MTSCHED_LOG_EVENTS

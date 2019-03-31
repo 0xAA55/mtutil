@@ -9,8 +9,8 @@
 typedef struct rwlock_struct
 {
 	mutex_t m;
-	atomic_int r_count;
-	atomic_int w_count;
+	atomic_intptr_t r_count;
+	atomic_intptr_t w_count;
 }rwlock_t, *rwlock_p;
 
 void rwlock_lock_r(rwlock_p l);
