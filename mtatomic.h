@@ -15,6 +15,9 @@
 #  ifdef _MSC_VER
 #    define STDATOMIC_SELF_IMPLEMENTATION 1
 #  endif
+#  ifdef __clang__
+#    include<stdatomic.h>
+#  endif
 #endif
 
 #include<stddef.h>
@@ -219,6 +222,91 @@ typedef volatile ptrdiff_t		atomic_ptrdiff_t;
 typedef volatile intmax_t		atomic_intmax_t;
 typedef volatile uintmax_t		atomic_uintmax_t;
 
+#define ATOMIC_FLAG_INIT 0
+
+#define ATOMIC_VAR_INIT(value) (value)
+
+#define atomic_init(obj, value)  __sync_lock_test_and_set(obj, value)
+
+#define kill_dependency(y) ((void)0)
+
+#define atomic_thread_fence(order) \
+    __sync_synchronize()
+
+#define atomic_signal_fence(order) \
+    __sync_synchronize()
+
+#define atomic_is_lock_free(obj) 0
+
+#define atomic_store(object, desired) __sync_lock_test_and_set(object, desired)
+
+#define atomic_store_explicit(object, desired, order) \
+    atomic_store(object, desired)
+
+#define atomic_load(object) \
+    (__sync_synchronize(), *(object))
+
+#define atomic_load_explicit(object, order) \
+    atomic_load(object)
+
+#define atomic_exchange(object, desired) \
+    __sync_lock_test_and_set(object, desired);
+
+#define atomic_exchange_explicit(object, desired, order) \
+    atomic_exchange(object, desired)
+
+#define atomic_compare_exchange_strong(object, expected, desired) __sync_bool_compare_and_swap(object, *expected, desired)
+
+#define atomic_compare_exchange_strong_explicit(object, expected, desired, success, failure) \
+    atomic_compare_exchange_strong(object, expected, desired)
+
+#define atomic_compare_exchange_weak(object, expected, desired) \
+    atomic_compare_exchange_strong(object, expected, desired)
+
+#define atomic_compare_exchange_weak_explicit(object, expected, desired, success, failure) \
+    atomic_compare_exchange_weak(object, expected, desired)
+
+#define atomic_fetch_add(object, operand) \
+    __sync_fetch_and_add(object, operand)
+
+#define atomic_fetch_sub(object, operand) \
+    __sync_fetch_and_sub(object, -(operand))
+
+#define atomic_fetch_or(object, operand) \
+    __sync_fetch_and_or(object, operand)
+
+#define atomic_fetch_xor(object, operand) \
+    __sync_fetch_and_xor(object, operand)
+
+#define atomic_fetch_and(object, operand) \
+    __sync_fetch_and_and(object, operand)
+
+#define atomic_fetch_add_explicit(object, operand, order) \
+    atomic_fetch_add(object, operand)
+
+#define atomic_fetch_sub_explicit(object, operand, order) \
+    atomic_fetch_sub(object, operand)
+
+#define atomic_fetch_or_explicit(object, operand, order) \
+    atomic_fetch_or(object, operand)
+
+#define atomic_fetch_xor_explicit(object, operand, order) \
+    atomic_fetch_xor(object, operand)
+
+#define atomic_fetch_and_explicit(object, operand, order) \
+    atomic_fetch_and(object, operand)
+
+#define atomic_flag_test_and_set(object) \
+    atomic_exchange(object, 1)
+
+#define atomic_flag_test_and_set_explicit(object, order) \
+    atomic_flag_test_and_set(object)
+
+#define atomic_flag_clear(object) \
+    atomic_store(object, 0)
+
+#define atomic_flag_clear_explicit(object, order) \
+    atomic_flag_clear(object)
 
 #  undef STDATOMIC_SELF_IMPLEMENTATION
 #  define STDATOMIC_SELF_IMPLEMENTATION 2
