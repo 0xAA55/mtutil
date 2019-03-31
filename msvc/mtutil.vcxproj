@@ -181,6 +181,7 @@
     <ClInclude Include="..\mtcommon.h" />
     <ClInclude Include="..\mtsched.h" />
     <ClInclude Include="..\mtschedman.h" />
+    <ClInclude Include="..\mtutil.h" />
     <ClInclude Include="..\mutex.h" />
     <ClInclude Include="..\rwlock.h" />
     <ClInclude Include="..\randinst.h" />
