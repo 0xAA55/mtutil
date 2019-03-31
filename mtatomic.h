@@ -26,42 +26,42 @@
 #if defined(_WIN32) && STDATOMIC_SELF_IMPLEMENTATION == 1
 #  include<Windows.h>
 
-typedef volatile int			atomic_flag;
-typedef volatile int			atomic_bool;
-typedef volatile char			atomic_char;
-typedef volatile signed char 	atomic_schar;
-typedef volatile unsigned char 	atomic_uchar;
-typedef volatile short 			atomic_short;
-typedef volatile unsigned short	atomic_ushort;
-typedef volatile int 			atomic_int;
-typedef volatile unsigned int 	atomic_uint;
-typedef volatile long 			atomic_long;
-typedef volatile unsigned long 	atomic_ulong;
-typedef volatile long long 		atomic_llong;
-typedef volatile unsigned long long atomic_ullong;
-typedef volatile wchar_t 		atomic_wchar_t;
-typedef volatile int_least8_t	atomic_int_least8_t;
-typedef volatile uint_least8_t	atomic_uint_least8_t;
-typedef volatile int_least16_t	atomic_int_least16_t;
-typedef volatile uint_least16_t	atomic_uint_least16_t;
-typedef volatile int_least32_t	atomic_int_least32_t;
-typedef volatile uint_least32_t	atomic_uint_least32_t;
-typedef volatile int_least64_t	atomic_int_least64_t;
-typedef volatile uint_least64_t	atomic_uint_least64_t;
-typedef volatile int_fast8_t	atomic_int_fast8_t;
-typedef volatile uint_fast8_t	atomic_uint_fast8_t;
-typedef volatile int_fast16_t	atomic_int_fast16_t;
-typedef volatile uint_fast16_t	atomic_uint_fast16_t;
-typedef volatile int_fast32_t	atomic_int_fast32_t;
-typedef volatile uint_fast32_t	atomic_uint_fast32_t;
-typedef volatile int_fast64_t	atomic_int_fast64_t;
-typedef volatile uint_fast64_t	atomic_uint_fast64_t;
-typedef volatile intptr_t		atomic_intptr_t;
-typedef volatile uintptr_t		atomic_uintptr_t;
-typedef volatile size_t			atomic_size_t;
-typedef volatile ptrdiff_t		atomic_ptrdiff_t;
-typedef volatile intmax_t		atomic_intmax_t;
-typedef volatile uintmax_t		atomic_uintmax_t;
+typedef volatile intptr_t atomic_flag;
+typedef volatile intptr_t atomic_bool;
+typedef volatile intptr_t atomic_char;
+typedef volatile intptr_t atomic_schar;
+typedef volatile intptr_t atomic_uchar;
+typedef volatile intptr_t atomic_short;
+typedef volatile intptr_t atomic_ushort;
+typedef volatile intptr_t atomic_int;
+typedef volatile intptr_t atomic_uint;
+typedef volatile intptr_t atomic_long;
+typedef volatile intptr_t atomic_ulong;
+typedef volatile intptr_t atomic_llong;
+typedef volatile intptr_t atomic_ullong;
+typedef volatile intptr_t atomic_wchar_t;
+typedef volatile intptr_t atomic_int_least8_t;
+typedef volatile intptr_t atomic_uint_least8_t;
+typedef volatile intptr_t atomic_int_least16_t;
+typedef volatile intptr_t atomic_uint_least16_t;
+typedef volatile intptr_t atomic_int_least32_t;
+typedef volatile intptr_t atomic_uint_least32_t;
+typedef volatile intptr_t atomic_int_least64_t;
+typedef volatile intptr_t atomic_uint_least64_t;
+typedef volatile intptr_t atomic_int_fast8_t;
+typedef volatile intptr_t atomic_uint_fast8_t;
+typedef volatile intptr_t atomic_int_fast16_t;
+typedef volatile intptr_t atomic_uint_fast16_t;
+typedef volatile intptr_t atomic_int_fast32_t;
+typedef volatile intptr_t atomic_uint_fast32_t;
+typedef volatile intptr_t atomic_int_fast64_t;
+typedef volatile intptr_t atomic_uint_fast64_t;
+typedef volatile intptr_t atomic_intptr_t;
+typedef volatile intptr_t atomic_uintptr_t;
+typedef volatile intptr_t atomic_size_t;
+typedef volatile intptr_t atomic_ptrdiff_t;
+typedef volatile intptr_t atomic_intmax_t;
+typedef volatile intptr_t atomic_uintmax_t;
 
 #define ATOMIC_FLAG_INIT 0
 
