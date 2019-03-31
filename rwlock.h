@@ -2,9 +2,8 @@
 
 #include<stdint.h>
 #include<stddef.h>
-
-#include"mutex.h"
-#include"mtcommon.h"
+#include<mutex.h>
+#include<mtcommon.h>
 
 typedef struct rwlock_struct
 {

@@ -2,6 +2,7 @@
 #include"randinst.h"
 #include"logprintf.h"
 #include<time.h>
+#include"argext.h"
 
 #ifndef MTSCHED_LOG_EVENTS
 #define MTSCHED_LOG_EVENTS 1

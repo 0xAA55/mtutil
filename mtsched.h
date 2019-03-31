@@ -3,11 +3,10 @@
 #include<stdint.h>
 #include<stddef.h>
 
-#include"mtcommon.h"
-#include"mutex.h"
-#include"rwlock.h"
-#include"avlbst.h"
-#include"argext.h"
+#include<mtcommon.h>
+#include<mutex.h>
+#include<rwlock.h>
+#include<avlbst.h>
 
 #define MTSCHED_MAX_PARAMS 128
 #define MTACCESS volatile
