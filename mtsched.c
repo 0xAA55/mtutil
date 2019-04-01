@@ -14,7 +14,7 @@ typedef struct mtsched_thread_param_struct
 	mtsched_p s;
 }mtsched_thread_param_t, *mtsched_thread_param_p;
 
-static int mtsched_participate_2(mtsched_p s, int thread_index);
+static int mtsched_participate_2(mtsched_p s, int thread_index, size_t *queue_index);
 
 static int mtsched_thread_proc(void *param)
 {
@@ -24,6 +24,7 @@ static int mtsched_thread_proc(void *param)
 	backoff_t bo;
 	int initbo = 0;
 	int is_idle = 0;
+	size_t qi = 0;
 	
 	atomic_fetch_add_explicit(&s->num_working_threads, 1, memory_order_relaxed);
 	
@@ -34,7 +35,7 @@ static int mtsched_thread_proc(void *param)
 	for(;;)
 	{
 		if(atomic_load(&s->quit)) break;
-		if(mtsched_participate_2(s, index))
+		if(mtsched_participate_2(s, index, &qi))
 		{
 			initbo = 0;
 			is_idle = 0;
@@ -343,22 +344,24 @@ static int mtsched_proc_pending_job(mtsched_p s, mtsched_queue_p q, int thread_i
 
 int mtsched_participate(mtsched_p s)
 {
-	return mtsched_participate_2(s, -1);
+	return mtsched_participate_2(s, -1, NULL);
 }
 
-static int mtsched_participate_2(mtsched_p s, int thread_index)
+static int mtsched_participate_2(mtsched_p s, int thread_index, size_t *queue_index)
 {
 	int did_job = 0;
 	size_t i;
+	size_t qi = queue_index ? *queue_index : 0;
 	if(!s) goto InvalidParamExit;
 	
 	for(i = 0; i < s->max_jobqueue && !did_job; i++)
 	{
-		mtsched_queue_p q = &s->jobqueue[i];
+		mtsched_queue_p q = &s->jobqueue[(i + qi) % s->max_jobqueue];
 		switch (atomic_load(&q->status))
 		{
 		case qs_pending:
 			did_job = mtsched_proc_pending_job(s, q, thread_index);
+			if (queue_index) *queue_index = i;
 			break;
 		}
 	}
