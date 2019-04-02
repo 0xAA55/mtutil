@@ -1,5 +1,4 @@
 #include"logprintf.h"
-// #include"projcfg.h"
 #include"mutex.h"
 #include"mtcommon.h"
 

@@ -1,5 +1,4 @@
 #include"mtcommon.h"
-// #include"projcfg.h"
 #include"randinst.h"
 #include"logprintf.h"
 #include"mtatomic.h"
