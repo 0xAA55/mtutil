@@ -277,7 +277,9 @@ int mtsched_submit(mtsched_form_p form, uint32_t *out_job_id)
 		{
 			if (loop_times >= 6)
 			{
+#if MTSCHED_LOG_EVENTS >= 2
 				logprintf_w("[mtsched] Job queue full.\n");
+#endif
 				break;
 			}
 			backoff_update(&bo);
