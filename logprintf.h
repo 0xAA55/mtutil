@@ -19,6 +19,7 @@ void logprintf_e(const char *fmt, ...);
 #  endif
 #else
 #  include<inttypes.h>
+#  define __USE_MINGW_ANSI_STDIO 1
 #  define PRIsize_t "zu"
 #endif
 
