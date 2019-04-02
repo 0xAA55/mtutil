@@ -275,7 +275,11 @@ int mtsched_submit(mtsched_form_p form, uint32_t *out_job_id)
 		loop_times ++;
 		if(loop_times >= 3)
 		{
-			if(loop_times == 5) logprintf_w("[mtsched] Job queue full.\n");
+			if (loop_times >= 6)
+			{
+				logprintf_w("[mtsched] Job queue full.\n");
+				break;
+			}
 			backoff_update(&bo);
 		}
 	}
