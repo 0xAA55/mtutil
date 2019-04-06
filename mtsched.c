@@ -141,15 +141,15 @@ mtsched_p mtsched_create(int logic_threads, size_t num_jobs_per_thread, size_t s
 	
 	return s;
 InvalidParamExit:
-	logprintf_e("[mtshced] Create new multithread scheduler failed: Invalid parameters.\n");
+	logprintf_e("[mtsched] Create new multithread scheduler failed: Invalid parameters.\n");
 	goto FailExit;
 #ifdef _WIN32
 WinErrExit:
-	logprintf_e("[mtshced] Create new multithread scheduler failed: (%ld) %s\n", GetLastError(), str_GetLastError());
+	logprintf_e("[mtsched] Create new multithread scheduler failed: (%ld) %s\n", GetLastError(), str_GetLastError());
 	goto FailExit;
 #endif // !_WIN32
 GenErrExit:
-	logprintf_e("[mtshced] Create new multithread scheduler failed: (%d) %s\n", errno, strerror(errno));
+	logprintf_e("[mtsched] Create new multithread scheduler failed: (%d) %s\n", errno, strerror(errno));
 	goto FailExit;
 FailExit:
 	mtsched_free(s);
@@ -161,7 +161,7 @@ size_t mtsched_get_numthreads(mtsched_p s)
 	if(!s) goto InvalidParamExit;
 	return s->num_thread_handles;
 InvalidParamExit:
-	logprintf_e("[mtshced] Get number of threads of a scheduler failed: Invalid parameters.\n");
+	logprintf_e("[mtsched] Get number of threads of a scheduler failed: Invalid parameters.\n");
 	goto FailExit;
 FailExit:
 	return 0;
@@ -178,7 +178,7 @@ int mtsched_initform(mtsched_p s, mtsched_form_p f, mtsched_proc proc, uint32_t 
 	
 	return 1;
 InvalidParamExit:
-	logprintf_e("[mtshced] Initialize a sheduler form failed: Invalid parameters.\n");
+	logprintf_e("[mtsched] Initialize a sheduler form failed: Invalid parameters.\n");
 	goto FailExit;
 FailExit:
 	return 0;
@@ -200,10 +200,10 @@ int mtsched_setparams(mtsched_form_p form, size_t max_args, ...)
 	va_end(ap);
 	return 1;
 InvalidParamExit:
-	logprintf_e("[mtshced] Set parameters of a sheduler form failed: Invalid parameters.\n");
+	logprintf_e("[mtsched] Set parameters of a sheduler form failed: Invalid parameters.\n");
 	goto FailExit;
 TooManyParamsExit:
-	logprintf_e("[mtshced] Set parameters of a sheduler form failed: Too many parameters (max %u), given %"PRIsize_t" parameters.\n", MTSCHED_MAX_PARAMS, max_args);
+	logprintf_e("[mtsched] Set parameters of a sheduler form failed: Too many parameters (max %u), given %"PRIsize_t" parameters.\n", MTSCHED_MAX_PARAMS, max_args);
 	goto FailExit;
 FailExit:
 	return 0;
@@ -263,7 +263,7 @@ int mtsched_submit(mtsched_form_p form, uint32_t *out_job_id)
 					atomic_fetch_add_explicit(&s->num_pending_jobs, 1, memory_order_relaxed);
 					if (out_job_id) *out_job_id = new_id;
 #if MTSCHED_LOG_EVENTS >= 3
-					logprintf("[mtshced] Scheduled job %08x on %u.\n", new_id, i);
+					logprintf("[mtsched] Scheduled job %08x on %u.\n", new_id, i);
 #endif
 					return 1;
 				}
@@ -287,7 +287,7 @@ int mtsched_submit(mtsched_form_p form, uint32_t *out_job_id)
 	}
 	return 0;
 InvalidParamExit:
-	logprintf_e("[mtshced] Submit a form to a scheduler failed: Invalid parameters.\n");
+	logprintf_e("[mtsched] Submit a form to a scheduler failed: Invalid parameters.\n");
 	goto FailExit;
 FailExit:
 	return 0;
@@ -374,7 +374,7 @@ static int mtsched_participate_2(mtsched_p s, int thread_index, size_t *queue_in
 	
 	return did_job;
 InvalidParamExit:
-	logprintf_e("[mtshced] Participate jobs from a scheduler failed: Invalid parameters.\n");
+	logprintf_e("[mtsched] Participate jobs from a scheduler failed: Invalid parameters.\n");
 	goto FailExit;
 FailExit:
 	return did_job;
@@ -396,7 +396,7 @@ queue_status_t mtsched_query_job_status(mtsched_p s, uint32_t job_id)
 	
 	return retval;
 InvalidParamExit:
-	logprintf_e("[mtshced] Query job status failed: Invalid parameters.\n");
+	logprintf_e("[mtsched] Query job status failed: Invalid parameters.\n");
 	goto FailExit;
 FailExit:
 	return retval;
@@ -428,10 +428,10 @@ int mtsched_get_retval(mtsched_p s, uint32_t job_id, int *pret)
 	if(!found) goto JobNotFoundExit;
 	return retval;
 JobNotFoundExit:
-	logprintf_e("[mtshced] Get job %08x retval failed: Job not found.\n", job_id);
+	logprintf_e("[mtsched] Get job %08x retval failed: Job not found.\n", job_id);
 	goto FailExit;
 InvalidParamExit:
-	logprintf_e("[mtshced] Get job %08x retval failed: Invalid parameters.\n", job_id);
+	logprintf_e("[mtsched] Get job %08x retval failed: Invalid parameters.\n", job_id);
 	goto FailExit;
 FailExit:
 	return retval;
@@ -455,19 +455,19 @@ int mtsched_receipt_job(mtsched_p s, uint32_t job_id)
 		if(atomic_load(&q->status) == qs_pending)
 		{
 #if MTSCHED_LOG_EVENTS >= 3
-			logprintf("[mtshced] Receipting Job %08x but it's still in pending state. Processing the job.\n", job_id);
+			logprintf("[mtsched] Receipting Job %08x but it's still in pending state. Processing the job.\n", job_id);
 #endif
 			if (!mtsched_proc_pending_job(s, q, -1))
 			{
 #if MTSCHED_LOG_EVENTS >= 3
-				logprintf("[mtshced] Job %08x was occupied by another thread.\n", job_id);
+				logprintf("[mtsched] Job %08x was occupied by another thread.\n", job_id);
 #endif
 				backoff_update(&bo);
 			}
 		}
 		while(atomic_load(&q->status) != qs_finished) backoff_update(&bo);
 #if MTSCHED_LOG_EVENTS >= 3
-		logprintf("[mtshced] Job %08x had been receipted.\n", job_id);
+		logprintf("[mtsched] Job %08x had been receipted.\n", job_id);
 #endif
 		rwlock_lock_w(&s->jobqueue_avlbst_lock);
 		avlbst_remove(&s->jobqueue_avlbst, job_id, NULL);
@@ -479,13 +479,13 @@ int mtsched_receipt_job(mtsched_p s, uint32_t job_id)
 	if(!found_node) goto NotFoundExit;
 	return 1;
 NotFoundExit:
-	logprintf_e("[mtshced] Receipt job failed: Job not found: %u.\n", job_id);
+	logprintf_e("[mtsched] Receipt job failed: Job not found: %u.\n", job_id);
 	goto FailExit;
 InvalidParamExit:
-	logprintf_e("[mtshced] Receipt job failed: Invalid parameters.\n");
+	logprintf_e("[mtsched] Receipt job failed: Invalid parameters.\n");
 	goto FailExit;
 UnexpectedErrorExit:
-	logprintf_e("[mtshced] Receipt job failed: Unexpected error.\n");
+	logprintf_e("[mtsched] Receipt job failed: Unexpected error.\n");
 	goto FailExit;
 FailExit:
 	return 0;
@@ -501,7 +501,7 @@ void mtsched_free(mtsched_p s)
 		
 		atomic_store(&s->quit, 1);
 #if MTSCHED_LOG_EVENTS
-		logprintf("[mtshced] Quit signal sent.\n");
+		logprintf("[mtsched] Quit signal sent.\n");
 #endif
 		while(atomic_load(&s->num_working_threads)) backoff_update(&bo);
 		
