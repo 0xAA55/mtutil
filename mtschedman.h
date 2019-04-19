@@ -1,9 +1,11 @@
-#pragma once
+#ifndef _MTSCHEDMAN_H_
+#define _MTSCHEDMAN_H_ 1
+
 #include<stdint.h>
 #include<stddef.h>
-#include<mtsched.h>
-#include<rwlock.h>
-#include<avlbst.h>
+#include<mtutil/mtsched.h>
+#include<mtutil/rwlock.h>
+#include<avlbst/avlbst.h>
 
 //=============================================================================
 // mtsched_manager feature: The main purpose of this feature is to manage every
@@ -51,4 +53,6 @@ int mtschedman_finish(mtsched_manager_p m);
 //   then cleanup memory usage.
 //-----------------------------------------------------------------------------
 void mtschedman_free(mtsched_manager_p m);
+
+#endif
 

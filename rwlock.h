@@ -1,9 +1,10 @@
-#pragma once
+#ifndef _RWLOCK_H_
+#define _RWLOCK_H_ 1
 
 #include<stdint.h>
 #include<stddef.h>
-#include<mutex.h>
-#include<mtcommon.h>
+#include<mtutil/mutex.h>
+#include<mtutil/mtcommon.h>
 
 typedef struct rwlock_struct
 {
@@ -19,4 +20,4 @@ int rwlock_trylock_w(rwlock_p l);
 void rwlock_unlock_r(rwlock_p l);
 void rwlock_unlock_w(rwlock_p l);
 
-
+#endif

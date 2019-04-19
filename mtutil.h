@@ -1,6 +1,9 @@
-#pragma once
+#ifndef _MTUTIL_H_
+#define _MTUTIL_H_ 1
 
-#include<mtcommon.h>
-#include<mtschedman.h>
-#include<mutex.h>
-#include<rwlock.h>
+#include<mtutil/mtcommon.h>
+#include<mtutil/mtschedman.h>
+#include<mtutil/mutex.h>
+#include<mtutil/rwlock.h>
+
+#endif

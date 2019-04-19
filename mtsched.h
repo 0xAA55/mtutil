@@ -1,12 +1,13 @@
-#pragma once
+#ifndef _MTSCHED_H_
+#define _MTSCHED_H_ 1
 
 #include<stdint.h>
 #include<stddef.h>
 
-#include<mtcommon.h>
-#include<mutex.h>
-#include<rwlock.h>
-#include<avlbst.h>
+#include<mtutil/mtcommon.h>
+#include<mtutil/mutex.h>
+#include<mtutil/rwlock.h>
+#include<avlbst/avlbst.h>
 
 #define MTSCHED_MAX_PARAMS 128
 #define MTACCESS volatile
@@ -188,3 +189,5 @@ int mtsched_receipt_job(mtsched_p s, uint32_t job_id);
 // Desc: Free the scheduler, wait for all of the co-workers quit, then return.
 //-----------------------------------------------------------------------------
 void mtsched_free(mtsched_p s);
+
+#endif

@@ -1,6 +1,6 @@
 #include"mtschedman.h"
 #include<stdlib.h>
-#include"logprintf.h"
+#include<logprintf/logprintf.h>
 
 #ifndef MTSCHEDMAN_LOG_EVENTS
 #define MTSCHEDMAN_LOG_EVENTS 1

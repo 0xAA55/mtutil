@@ -1,6 +1,7 @@
-#pragma once
+#ifndef _MTCOMMON_H_
+#define _MTCOMMON_H_ 1
 
-#include<mtatomic.h>
+#include<mtutil/mtatomic.h>
 #include<stdint.h>
 #include<stddef.h>
 
@@ -121,3 +122,5 @@ void backoff_init(backoff_p bo, unsigned max_relaxes, unsigned max_sleeps);
 //   sleep to do backoff yielding.
 //-----------------------------------------------------------------------------
 int backoff_update(backoff_p bo);
+
+#endif // !_MTCOMMON_H_

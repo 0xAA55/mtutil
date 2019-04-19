@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MTATOMIC_H_
+#define _MTATOMIC_H_ 1
 
 #if defined(__GNUC__) && !defined(_GCC_VER)
 #  define _GCC_VER __GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__
@@ -311,3 +312,5 @@ typedef volatile uintmax_t		atomic_uintmax_t;
 #  undef STDATOMIC_SELF_IMPLEMENTATION
 #  define STDATOMIC_SELF_IMPLEMENTATION 2
 #endif // defined(__GNUC__) && STDATOMIC_SELF_IMPLEMENTATION == 1
+
+#endif

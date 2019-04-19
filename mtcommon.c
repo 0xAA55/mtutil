@@ -1,7 +1,7 @@
 #include"mtcommon.h"
 #include"randinst.h"
-#include"logprintf.h"
 #include"mtatomic.h"
+#include<logprintf/logprintf.h>
 
 void mt_sleep(unsigned sleeps)
 {

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _ARGEXT_H_
+#define _ARGEXT_H_ 1
 
 #include<stdarg.h>
 
@@ -11,4 +12,4 @@
 #define TO_ARGS_64(arr, base)  TO_ARGS_32(arr, (base) + 0), TO_ARGS_32(arr, (base) + 32)
 #define TO_ARGS_128(arr, base) TO_ARGS_64(arr, (base) + 0), TO_ARGS_64(arr, (base) + 64)
 
-
+#endif
