@@ -60,7 +60,7 @@ typedef struct mtsched_struct
 	MTACCESS unsigned max_pause_inst;
 	MTACCESS unsigned max_wakeup_delay; // In ms. The larger number, the less CPU overhead
 	
-	MTACCESS int quit; // All quit
+	atomic_int quit; // All quit
 	
 	// Number of thread handles
 	thread_handle_p thread_handles;

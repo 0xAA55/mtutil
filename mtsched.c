@@ -173,7 +173,7 @@ int mtsched_initform(mtsched_p s, mtsched_form_p f, mtsched_proc proc, uint32_t 
 	
 	memset(f, 0, sizeof *f);
 	f->s = s;
-	f->mtsched_func = proc;
+	f->mtsched_func = (void*)proc;
 	f->options = options;
 	
 	return 1;
@@ -300,6 +300,8 @@ static int mtsched_proc_pending_job(mtsched_p s, mtsched_queue_p q, int thread_i
 	mtsched_proc fp = (mtsched_proc)q->mtsched_func;
 	if (atomic_load(&q->status) != qs_pending) return 0;
 	if (!atomic_compare_exchange_strong(&q->status, &olds, qs_processing)) return 0;
+
+	(void)thread_index;
 
 	atomic_fetch_sub_explicit(&s->num_pending_jobs, 1, memory_order_relaxed);
 	atomic_fetch_add_explicit(&s->num_processing_jobs, 1, memory_order_relaxed);
