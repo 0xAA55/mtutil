@@ -5,12 +5,21 @@ RANLIB = $(GCC_PREFIX)gcc-ranlib
 OPTIMIZATIONS=-g -O3 -fdata-sections -ffunction-sections -fmerge-all-constants -flto -fuse-linker-plugin -ffat-lto-objects
 CFLAGS=-Wall $(OPTIMIZATIONS) -I.. -I../common/inc
 
-includes = $(wildcard *.h)
+OBJS=mtatomic.o
+OBJS+=mtcommon.o
+OBJS+=mtsched.o
+OBJS+=mtschedman.o
+OBJS+=mutex.o
+OBJS+=rwlock.o
+OBJS+=randinst.o
 
-%.o: %.c ${includes}
-	$(CC) -c $(CFLAGS) -o $@ $<
+all: libmtutil.a
+
+%.o: %.c
+	$(CC) -c $(CFLAGS) $*.c -o $*.o
+	$(CC) -MM $(CFLAGS) $*.c > $*.d
 	
-libmtutil.a: mtatomic.o mtcommon.o mtsched.o mtschedman.o mutex.o rwlock.o randinst.o
+libmtutil.a: $(OBJS)
 	$(AR) rcu $@ $+
 	$(RANLIB) $@
 
