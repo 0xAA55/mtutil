@@ -15,6 +15,8 @@ OBJS+=randinst.o
 
 all: libmtutil.a
 
+-include $(OBJS:.o=.d)
+
 %.o: %.c
 	$(CC) -c $(CFLAGS) $*.c -o $*.o
 	$(CC) -MM $(CFLAGS) $*.c > $*.d
